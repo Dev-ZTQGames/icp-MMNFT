@@ -1,1 +1,0 @@
-(principal, Dip721NonFungibleToken)
