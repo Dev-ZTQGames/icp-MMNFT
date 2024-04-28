@@ -7,6 +7,6 @@ dfx deploy --playground dip721_nft_container --argument "(
     };
     name = \"Mining Maze\";
     symbol = \"MM\";
-    maxLimit = 10;
+    maxLimit = 9554;
   }
 )"

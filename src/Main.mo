@@ -13,6 +13,15 @@ import Types "./Types";
 shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibleToken) = Self {
   stable var transactionId: Types.TransactionId = 0;
   stable var nfts = List.nil<Types.Nft>();
+  stable var nfts_Limit : Nat8 = 5555;
+  stable var nftsRare = List.nil<Types.Nft>();
+  stable var nftsRare_Limit : Nat8 = 2222;
+  stable var nftsEpic = List.nil<Types.Nft>();
+  stable var nftsEpic_Limit : Nat8 = 1111;
+  stable var nftsUnique = List.nil<Types.Nft>();
+  stable var nftsUnique_Limit : Nat8 = 555;
+  stable var nftsLegendary = List.nil<Types.Nft>();
+  stable var nftsLegendary_Limit : Nat8 = 111;
   stable var custodians = List.make<Principal>(custodian);
   stable var logo : Types.LogoResult = init.logo;
   stable var name : Text = init.name;
