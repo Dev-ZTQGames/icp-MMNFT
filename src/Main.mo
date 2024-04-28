@@ -173,4 +173,92 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
       id = transactionId;
     });
   };
+
+  public shared({ caller }) func mintRareCustom(to: Principal, metadata: Types.MetadataDesc) : async Types.MintReceipt {
+    if (not List.some(custodians, func (custodian : Principal) : Bool { custodian == caller })) {
+      return #Err(#Unauthorized);
+    };
+
+    let newId = Nat64.fromNat(List.size(nfts));
+    let nft : Types.Nft = {
+      owner = to;
+      id = newId;
+      metadata = metadata;
+    };
+
+    nfts := List.push(nft, nfts);
+
+    transactionId += 1;
+
+    return #Ok({
+      token_id = newId;
+      id = transactionId;
+    });
+  };
+
+  public shared({ caller }) func mintEpicCustom(to: Principal, metadata: Types.MetadataDesc) : async Types.MintReceipt {
+    if (not List.some(custodians, func (custodian : Principal) : Bool { custodian == caller })) {
+      return #Err(#Unauthorized);
+    };
+
+    let newId = Nat64.fromNat(List.size(nfts));
+    let nft : Types.Nft = {
+      owner = to;
+      id = newId;
+      metadata = metadata;
+    };
+
+    nfts := List.push(nft, nfts);
+
+    transactionId += 1;
+
+    return #Ok({
+      token_id = newId;
+      id = transactionId;
+    });
+  };
+
+  public shared({ caller }) func mintUniqueCustom(to: Principal, metadata: Types.MetadataDesc) : async Types.MintReceipt {
+    if (not List.some(custodians, func (custodian : Principal) : Bool { custodian == caller })) {
+      return #Err(#Unauthorized);
+    };
+
+    let newId = Nat64.fromNat(List.size(nfts));
+    let nft : Types.Nft = {
+      owner = to;
+      id = newId;
+      metadata = metadata;
+    };
+
+    nfts := List.push(nft, nfts);
+
+    transactionId += 1;
+
+    return #Ok({
+      token_id = newId;
+      id = transactionId;
+    });
+  };
+
+  public shared({ caller }) func mintLegendaryCustom(to: Principal, metadata: Types.MetadataDesc) : async Types.MintReceipt {
+    if (not List.some(custodians, func (custodian : Principal) : Bool { custodian == caller })) {
+      return #Err(#Unauthorized);
+    };
+
+    let newId = Nat64.fromNat(List.size(nfts));
+    let nft : Types.Nft = {
+      owner = to;
+      id = newId;
+      metadata = metadata;
+    };
+
+    nfts := List.push(nft, nfts);
+
+    transactionId += 1;
+
+    return #Ok({
+      token_id = newId;
+      id = transactionId;
+    });
+  };
 }
