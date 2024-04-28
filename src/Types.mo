@@ -19,6 +19,7 @@ module {
     #InvalidTokenId;
     #ZeroAddress;
     #Other;
+    #ExceedLimit;
   };
 
   public type Result<S, E> = {
