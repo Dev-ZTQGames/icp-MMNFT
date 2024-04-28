@@ -9,7 +9,7 @@
 
 # dfx temporary files
 .dfx/
-.dfx/playground/
+.dfx*/
 
 # generated files
 **/declarations/
