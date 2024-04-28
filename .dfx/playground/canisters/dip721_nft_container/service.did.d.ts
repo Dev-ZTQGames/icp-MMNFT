@@ -8,6 +8,7 @@ export type ApiError = { 'ZeroAddress' : null } |
   { 'Other' : null };
 export interface Dip721NFT {
   'balanceOfDip721' : ActorMethod<[Principal], bigint>,
+  'baseURLCustom' : ActorMethod<[], string>,
   'getMaxLimitDip721' : ActorMethod<[], number>,
   'getMetadataDip721' : ActorMethod<[TokenId], MetadataResult>,
   'getMetadataForUserDip721' : ActorMethod<[Principal], ExtendedMetadataResult>,
@@ -23,6 +24,7 @@ export interface Dip721NFT {
     [Principal, Principal, TokenId],
     TxReceipt
   >,
+  'setBaseURLCustom' : ActorMethod<[string], string>,
   'supportedInterfacesDip721' : ActorMethod<[], Array<InterfaceId>>,
   'symbolDip721' : ActorMethod<[], string>,
   'totalSupplyDip721' : ActorMethod<[], bigint>,

@@ -1,5 +1,5 @@
 dfx deploy --playground dip721_nft_container --argument "(
-  principal \"pi5f5-wa6q7-y2zcs-4nqx7-veomh-k3rqy-bpii6-54d47-iix3c-hh3nx-pae\", 
+  principal \"p63kj-vlrqf-chucp-shmgr-gnuj7-uop7f-flj32-qzfgc-l55nf-vuutz-gae\", 
   record {
     logo = record {
       logo_type = \"image/png\";

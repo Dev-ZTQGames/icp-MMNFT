@@ -18,6 +18,7 @@ type MetadataVal =
 type Nft = {id : TokenId; metadata : MetadataDesc; owner : Principal};
 type TokenId = Nat64;
 actor {
+  stable var baseURL : Text;
   stable var custodians : ?(Principal, List<Principal>);
   stable var logo : {data : Text; logo_type : Text};
   stable var maxLimit : Nat16;

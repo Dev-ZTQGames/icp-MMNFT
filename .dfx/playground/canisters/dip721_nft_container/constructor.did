@@ -1,6 +1,7 @@
 type ApiError = variant { ZeroAddress; InvalidTokenId; Unauthorized; Other };
 type Dip721NFT = service {
   balanceOfDip721 : (principal) -> (nat64) query;
+  baseURLCustom : () -> (text) query;
   getMaxLimitDip721 : () -> (nat16) query;
   getMetadataDip721 : (TokenId) -> (MetadataResult) query;
   getMetadataForUserDip721 : (principal) -> (ExtendedMetadataResult);
@@ -10,6 +11,7 @@ type Dip721NFT = service {
   nameDip721 : () -> (text) query;
   ownerOfDip721 : (TokenId) -> (OwnerResult) query;
   safeTransferFromDip721 : (principal, principal, TokenId) -> (TxReceipt);
+  setBaseURLCustom : (text) -> (text);
   supportedInterfacesDip721 : () -> (vec InterfaceId) query;
   symbolDip721 : () -> (text) query;
   totalSupplyDip721 : () -> (nat64) query;

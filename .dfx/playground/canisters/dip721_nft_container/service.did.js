@@ -51,6 +51,7 @@ export const idlFactory = ({ IDL }) => {
   });
   const Dip721NFT = IDL.Service({
     'balanceOfDip721' : IDL.Func([IDL.Principal], [IDL.Nat64], ['query']),
+    'baseURLCustom' : IDL.Func([], [IDL.Text], ['query']),
     'getMaxLimitDip721' : IDL.Func([], [IDL.Nat16], ['query']),
     'getMetadataDip721' : IDL.Func([TokenId], [MetadataResult], ['query']),
     'getMetadataForUserDip721' : IDL.Func(
@@ -72,6 +73,7 @@ export const idlFactory = ({ IDL }) => {
         [TxReceipt],
         [],
       ),
+    'setBaseURLCustom' : IDL.Func([IDL.Text], [IDL.Text], []),
     'supportedInterfacesDip721' : IDL.Func(
         [],
         [IDL.Vec(InterfaceId)],
