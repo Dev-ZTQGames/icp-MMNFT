@@ -128,6 +128,24 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
     );
   };
 
+  public query func totalSupplyEpicCustom() : async Nat64 {
+    return Nat64.fromNat(
+      List.size(nftsEpic)
+    );
+  };
+
+  public query func totalSupplyUniqueCustom() : async Nat64 {
+    return Nat64.fromNat(
+      List.size(nftsUnique)
+    );
+  };
+
+  public query func totalSupplyLegendaryCustom() : async Nat64 {
+    return Nat64.fromNat(
+      List.size(nftsLegendary)
+    );
+  };
+
   public query func getMetadataDip721(token_id: Types.TokenId) : async Types.MetadataResult {
     let item = List.find(nfts, func(token: Types.Nft) : Bool { token.id == token_id });
     switch (item) {
@@ -242,7 +260,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
       metadata = metadata;
     };
 
-    nfts := List.push(nft, nftsEpic);
+    nftsEpic := List.push(nft, nftsEpic);
 
     transactionId += 1;
 
@@ -271,7 +289,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
       metadata = metadata;
     };
 
-    nfts := List.push(nft, nftsUnique);
+    nftsUnique := List.push(nft, nftsUnique);
 
     transactionId += 1;
 
@@ -300,7 +318,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
       metadata = metadata;
     };
 
-    nfts := List.push(nft, nftsLegendary);
+    nftsLegendary := List.push(nft, nftsLegendary);
 
     transactionId += 1;
 

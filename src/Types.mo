@@ -52,6 +52,11 @@ module {
     metadata: MetadataDesc;
   };
 
+  public type WhiteList = {
+    user: Principal;
+    grade: Text;
+  };
+
   public type ExtendedMetadataResult = Result<{
     metadata_desc: MetadataDesc;
     token_id: TokenId;
