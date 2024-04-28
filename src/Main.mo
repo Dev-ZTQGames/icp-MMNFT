@@ -120,11 +120,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
         return #Err(#InvalidTokenId);
       };
       case (?token) {
-        return #Ok({
-	  metadata_desc = token.metadata;
-	  json_url = "json/" # baseURL # token_id # ".json";
-	  img_url = "img/" # baseURL # token_id # ".img";
-	});
+        return #Ok(token.metadata);
       }
     };
   };
