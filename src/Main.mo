@@ -13,9 +13,9 @@ import Types "./Types";
 shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibleToken) = Self {
   stable var transactionId: Types.TransactionId = 0;
   stable var nfts = List.nil<Types.Nft>();
-  stable var nfts_Limit : Nat64 = 5;
+  stable var nfts_Limit : Nat64 = 5555;
   stable var nftsRare = List.nil<Types.Nft>();
-  stable var nftsRare_Limit : Nat64 = 2;
+  stable var nftsRare_Limit : Nat64 = 2222;
   stable var nftsEpic = List.nil<Types.Nft>();
   stable var nftsEpic_Limit : Nat64 = 1111;
   stable var nftsUnique = List.nil<Types.Nft>();
@@ -117,6 +117,12 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
   };
 
   public query func totalSupplyDip721() : async Nat64 {
+    return Nat64.fromNat(
+      List.size(nfts) + List.size(nftsRare) + List.size(nftsEpic) + List.size(nftsUnique) + List.size(nftsLegendary)
+    );
+  };
+
+  public query func totalSupplyNormalCustom() : async Nat64 {
     return Nat64.fromNat(
       List.size(nfts)
     );
