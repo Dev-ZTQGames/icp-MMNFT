@@ -35,13 +35,11 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
 
   public query func balanceOfDip721(user: Principal) : async Nat64 {
     return Nat64.fromNat(
-      List.size(
-        List.filter(nfts, func(token: Types.Nft) : Bool { token.owner == user }) + 
-	List.filter(nftsRare, func(token: Types.Nft) : Bool { token.owner == user }) + 
-	List.filter(nftsEpic, func(token: Types.Nft) : Bool { token.owner == user }) + 
-	List.filter(nftsUnique, func(token: Types.Nft) : Bool { token.owner == user }) + 
-	List.filter(nftsLegendary, func(token: Types.Nft) : Bool { token.owner == user })
-      )
+      List.size(List.filter(nfts, func(token: Types.Nft) : Bool { token.owner == user })) + 
+      List.size(List.filter(nftsRare, func(token: Types.Nft) : Bool { token.owner == user })) + 
+      List.size(List.filter(nftsEpic, func(token: Types.Nft) : Bool { token.owner == user })) + 
+      List.size(List.filter(nftsUnique, func(token: Types.Nft) : Bool { token.owner == user })) + 
+      List.size(List.filter(nftsLegendary, func(token: Types.Nft) : Bool { token.owner == user }))
     );
   };
 
