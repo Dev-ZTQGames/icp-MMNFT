@@ -13,15 +13,15 @@ import Types "./Types";
 shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibleToken) = Self {
   stable var transactionId: Types.TransactionId = 0;
   stable var nfts = List.nil<Types.Nft>();
-  stable var nfts_Limit : Nat64 = 5555;
+  stable var nfts_Limit : Nat64 = 5555;				// 0~5554
   stable var nftsRare = List.nil<Types.Nft>();
-  stable var nftsRare_Limit : Nat64 = 2222;
+  stable var nftsRare_Limit : Nat64 = 2222;			// 5555~7776
   stable var nftsEpic = List.nil<Types.Nft>();
-  stable var nftsEpic_Limit : Nat64 = 1111;
+  stable var nftsEpic_Limit : Nat64 = 1111;			// 7777~8887
   stable var nftsUnique = List.nil<Types.Nft>();
-  stable var nftsUnique_Limit : Nat64 = 555;
+  stable var nftsUnique_Limit : Nat64 = 555;			// 8888~9442
   stable var nftsLegendary = List.nil<Types.Nft>();
-  stable var nftsLegendary_Limit : Nat64 = 111;
+  stable var nftsLegendary_Limit : Nat64 = 111;		// 9443~9553
   stable var custodians = List.make<Principal>(custodian);
   stable var logo : Types.LogoResult = init.logo;
   stable var name : Text = init.name;
@@ -43,6 +43,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
     );
   };
 
+  // check expansion token id...
   public query func ownerOfDip721(token_id: Types.TokenId) : async Types.OwnerResult {
     let item_Normal	= List.find(nfts, func(token: Types.Nft) : Bool { token.id == token_id });
     switch (item_Normal) {
