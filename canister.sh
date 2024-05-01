@@ -1,4 +1,4 @@
-dfx deploy --playground dip721_nft_container --argument "(
+dfx deploy --playground NFT_MiningMaze --argument "(
   principal \"p63kj-vlrqf-chucp-shmgr-gnuj7-uop7f-flj32-qzfgc-l55nf-vuutz-gae\", 
   record {
     logo = record {

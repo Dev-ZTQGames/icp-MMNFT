@@ -45,6 +45,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
 
   // check expansion token id...
   public query func ownerOfDip721(token_id: Types.TokenId) : async Types.OwnerResult {
+
     if ( token_id < nfts_Limit ) {
       let item_Normal = List.find(nfts, func(token: Types.Nft) : Bool { token.id == token_id });
       switch (item_Normal) {
@@ -104,6 +105,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
         };
       };
     };
+
   };
 
   public shared({ caller }) func safeTransferFromDip721(from: Principal, to: Principal, token_id: Types.TokenId) : async Types.TxReceipt {  
@@ -295,7 +297,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
     transactionId += 1;
 
     return #Ok({
-      token_id = newId + nfts_Limit - 1;
+      token_id = ( newId + nfts_Limit );
       id = transactionId;
     });
   };
@@ -324,7 +326,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
     transactionId += 1;
 
     return #Ok({
-      token_id = newId + nfts_Limit + nftsRare_Limit - 1;
+      token_id = newId + nfts_Limit + nftsRare_Limit;
       id = transactionId;
     });
   };
@@ -353,7 +355,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
     transactionId += 1;
 
     return #Ok({
-      token_id = newId + nfts_Limit + nftsRare_Limit + nftsEpic_Limit - 1;
+      token_id = newId + nfts_Limit + nftsRare_Limit + nftsEpic_Limit;
       id = transactionId;
     });
   };
@@ -382,7 +384,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
     transactionId += 1;
 
     return #Ok({
-      token_id = newId + nfts_Limit + nftsRare_Limit + nftsEpic_Limit + nftsUnique_Limit- 1;
+      token_id = newId + nfts_Limit + nftsRare_Limit + nftsEpic_Limit + nftsUnique_Limit;
       id = transactionId;
     });
   };

@@ -1,6 +1,6 @@
 {
   "canisters": {
-    "dip721_nft_container": {
+    "NFT_MiningMaze": {
       "main": "src/Main.mo"
     }
   }

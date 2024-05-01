@@ -70,33 +70,39 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
       };
     };
 
-    let item_Epic	= List.find(nftsEpic, func(token: Types.Nft) : Bool { token.id == token_id });
-    switch (item_Epic) {
-      case (null) {
-        return #Err(#InvalidTokenId);
-      };
-      case (?token) {
-        return #Ok(token.owner);
-      };
-    };
-
-    let item_Unique = List.find(nftsUnique, func(token: Types.Nft) : Bool { token.id == token_id });
-    switch (item_Unique) {
-      case (null) {
-        return #Err(#InvalidTokenId);
-      };
-      case (?token) {
-        return #Ok(token.owner);
+    if ( token_id < nftsEpic_Limit + nftsRare_Limit + nfts_Limit ) {
+      let item_Epic	= List.find(nftsEpic, func(token: Types.Nft) : Bool { token.id == ( nftsRare_Limit + nfts_Limit ) - token_id });
+      switch (item_Epic) {
+        case (null) {
+          return #Err(#InvalidTokenId);
+        };
+        case (?token) {
+          return #Ok(token.owner);
+        };
       };
     };
 
-    let item_Legendary = List.find(nftsLegendary, func(token: Types.Nft) : Bool { token.id == token_id });
-    switch (item_Legendary) {
-      case (null) {
-        return #Err(#InvalidTokenId);
+    if ( token_id < nftsUnique_Limit + nftsEpic_Limit + nftsRare_Limit + nfts_Limit ) {
+      let item_Unique = List.find(nftsUnique, func(token: Types.Nft) : Bool { token.id == ( nftsEpic_Limit + nftsRare_Limit + nfts_Limit ) - token_id });
+      switch (item_Unique) {
+        case (null) {
+          return #Err(#InvalidTokenId);
+        };
+        case (?token) {
+          return #Ok(token.owner);
+        };
       };
-      case (?token) {
-        return #Ok(token.owner);
+    };
+
+    if ( token_id < nftsLegendary_Limit + nftsUnique_Limit + nftsEpic_Limit + nftsRare_Limit + nfts_Limit ) {
+      let item_Legendary = List.find(nftsLegendary, func(token: Types.Nft) : Bool { token.id == ( nftsUnique_Limit + nftsEpic_Limit + nftsRare_Limit + nfts_Limit ) - token_id });
+      switch (item_Legendary) {
+        case (null) {
+          return #Err(#InvalidTokenId);
+        };
+        case (?token) {
+          return #Ok(token.owner);
+        };
       };
     };
 
@@ -291,7 +297,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
     transactionId += 1;
 
     return #Ok({
-      token_id = newId;
+      token_id = ( newId + nfts_Limit );
       id = transactionId;
     });
   };
@@ -320,7 +326,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
     transactionId += 1;
 
     return #Ok({
-      token_id = newId;
+      token_id = newId + nfts_Limit + nftsRare_Limit;
       id = transactionId;
     });
   };
@@ -349,7 +355,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
     transactionId += 1;
 
     return #Ok({
-      token_id = newId;
+      token_id = newId + nfts_Limit + nftsRare_Limit + nftsEpic_Limit;
       id = transactionId;
     });
   };
@@ -378,7 +384,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
     transactionId += 1;
 
     return #Ok({
-      token_id = newId;
+      token_id = newId + nfts_Limit + nftsRare_Limit + nftsEpic_Limit + nftsUnique_Limit;
       id = transactionId;
     });
   };
