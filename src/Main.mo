@@ -45,25 +45,30 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
 
   // check expansion token id...
   public query func ownerOfDip721(token_id: Types.TokenId) : async Types.OwnerResult {
-    let item_Normal	= List.find(nfts, func(token: Types.Nft) : Bool { token.id == token_id });
-    switch (item_Normal) {
-      case (null) {
-        return #Err(#InvalidTokenId);
-      };
-      case (?token) {
-        return #Ok(token.owner);
+
+    if ( token_id < nfts_Limit ) {
+      let item_Normal = List.find(nfts, func(token: Types.Nft) : Bool { token.id == token_id });
+      switch (item_Normal) {
+        case (null) {
+	  return #Err(#InvalidTokenId);
+        };
+        case (?token) {
+	  return #Ok(token.owner);
+        };
       };
     };
 
-    let item_Rare	= List.find(nftsRare, func(token: Types.Nft) : Bool { token.id == token_id });
-    switch (item_Rare) {
-      case (null) {
-        return #Err(#InvalidTokenId);
+    if ( token_id < nftsRare_Limit + nfts_Limit ) {
+      let item_Rare	= List.find(nftsRare, func(token: Types.Nft) : Bool { token.id == nfts_Limit - token_id });
+      switch (item_Rare) {
+        case (null) {
+          return #Err(#InvalidTokenId);
+        };
+        case (?token) {
+          return #Ok(token.owner);
+        };
       };
-      case (?token) {
-        return #Ok(token.owner);
-      };
-    };
+    }
 
     let item_Epic	= List.find(nftsEpic, func(token: Types.Nft) : Bool { token.id == token_id });
     switch (item_Epic) {
@@ -94,6 +99,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
         return #Ok(token.owner);
       };
     };
+
   };
 
   public shared({ caller }) func safeTransferFromDip721(from: Principal, to: Principal, token_id: Types.TokenId) : async Types.TxReceipt {  
