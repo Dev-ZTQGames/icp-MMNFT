@@ -121,7 +121,9 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
   };
 
   func transferFrom(from: Principal, to: Principal, token_id: Types.TokenId, caller: Principal) : Types.TxReceipt {
+
     let item = List.find(nfts, func(token: Types.Nft) : Bool { token.id == token_id });
+
     switch (item) {
       case null {
         return #Err(#InvalidTokenId);
@@ -132,6 +134,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
         } else if (Principal.notEqual(from, token.owner)) {
           return #Err(#Other);
         } else {
+
           nfts := List.map(nfts, func (item : Types.Nft) : Types.Nft {
             if (item.id == token.id) {
               let update : Types.Nft = {
@@ -144,11 +147,14 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
               return item;
             };
           });
+
           transactionId += 1;
           return #Ok(transactionId);   
+
         };
       };
     };
+
   };
 
   public query func supportedInterfacesDip721() : async [Types.InterfaceId] {
