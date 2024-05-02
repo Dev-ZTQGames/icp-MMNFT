@@ -212,7 +212,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
     if ( token_id < nfts_Limit ) {
       let item_Normal = List.find(nfts, func(token: Types.Nft) : Bool { token.id == token_id });
       switch (item_Normal) {
-        case null {
+        case (null) {
           return #Err(#InvalidTokenId);
         };
         case (?token) {
@@ -223,8 +223,8 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
 
     if ( token_id < nftsRare_Limit + nfts_Limit ) {
       let item_Rare = List.find(nftsRare, func(token: Types.Nft) : Bool { token.id == token_id - nfts_Limit });
-      switch (item_Normal) {
-        case null {
+      switch (item_Rare) {
+        case (null) {
           return #Err(#InvalidTokenId);
         };
         case (?token) {
@@ -236,7 +236,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
     if ( token_id < nftsEpic_Limit + nftsRare_Limit + nfts_Limit ) {
       let item_Epic = List.find(nftsEpic, func(token: Types.Nft) : Bool { token.id == token_id - ( nftsRare_Limit + nfts_Limit ) });
       switch (item_Epic) {
-        case null {
+        case (null) {
           return #Err(#InvalidTokenId);
         };
         case (?token) {
@@ -248,7 +248,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
     if ( token_id < nftsUnique_Limit + nftsEpic_Limit + nftsRare_Limit + nfts_Limit ) {
       let item_Unique = List.find(nftsEpic, func(token: Types.Nft) : Bool { token.id == token_id - ( nftsEpic_Limit + nftsRare_Limit + nfts_Limit ) });
       switch (item_Unique) {
-        case null {
+        case (null) {
           return #Err(#InvalidTokenId);
         };
         case (?token) {
@@ -260,7 +260,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
     if ( token_id < nftsLegendary_Limit + nftsUnique_Limit + nftsEpic_Limit + nftsRare_Limit + nfts_Limit ) {
       let item_Legendary = List.find(nftsEpic, func(token: Types.Nft) : Bool { token.id == token_id - ( nftsUnique_Limit + nftsEpic_Limit + nftsRare_Limit + nfts_Limit ) });
       switch (item_Legendary) {
-        case null {
+        case (null) {
           return #Err(#InvalidTokenId);
         };
         case (?token) {
@@ -269,6 +269,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
       };
     };
 
+    return #Err(#InvalidTokenId);
   };
 
   public query func getMaxLimitDip721() : async Nat16 {
@@ -298,9 +299,32 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
   };
 
   public query func getTokenIdsForUserDip721(user: Principal) : async [Types.TokenId] {
+    
     let items = List.filter(nfts, func(token: Types.Nft) : Bool { token.owner == user });
     let tokenIds = List.map(items, func (item : Types.Nft) : Types.TokenId { item.id });
-    return List.toArray(tokenIds);
+    let array_tokenIds = List.toArray(tokenIds);
+
+    let itemsRare = List.filter(nftsRare, func(token: Types.Nft) : Bool { token.owner == user });
+    let tokenIdsRare = List.map(itemsRare, func (item : Types.Nft) : Types.TokenId { item.id + nfts_Limit });
+    let array_tokenIdsRare = List.toArray(tokenIdsRare);
+    let array_NormalRare = Array.append(array_tokenIds, array_tokenIdsRare);
+
+    let itemsEpic = List.filter(nftsEpic, func(token: Types.Nft) : Bool { token.owner == user });
+    let tokenIdsEpic = List.map(itemsEpic, func (item : Types.Nft) : Types.TokenId { item.id + nfts_Limit + nftsRare_Limit });
+    let array_tokenIdsEpic = List.toArray(tokenIdsEpic);
+    let array_tillEpic = Array.append(array_NormalRare, array_tokenIdsEpic);
+
+    let itemsUnique = List.filter(nftsUnique, func(token: Types.Nft) : Bool { token.owner == user });
+    let tokenIdsUnique = List.map(itemsUnique, func (item : Types.Nft) : Types.TokenId { item.id + nfts_Limit + nftsRare_Limit + nftsEpic_Limit });
+    let array_tokenIdsUnique = List.toArray(tokenIdsUnique);
+    let array_tillUnique = Array.append(array_tillEpic, array_tokenIdsUnique);
+
+    let itemsLegendary = List.filter(nftsLegendary, func(token: Types.Nft) : Bool { token.owner == user });
+    let tokenIdsLegendary = List.map(itemsLegendary, func (item : Types.Nft) : Types.TokenId { item.id + nfts_Limit + nftsRare_Limit + nftsEpic_Limit + nftsUnique_Limit });
+    let array_tokenIdsLegendary = List.toArray(tokenIdsLegendary);
+    let array_tillLegendary = Array.append(array_tillUnique, array_tokenIdsLegendary);
+
+    return array_tillLegendary;
   };
 
   public shared({ caller }) func mintDip721(to: Principal, metadata: Types.MetadataDesc) : async Types.MintReceipt {
