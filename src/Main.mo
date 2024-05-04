@@ -484,6 +484,10 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
       return #Err(#ExceedLimit);
     };
 
+    if ( Nat64.fromNat(List.size(List.filter(nfts, func(token: Types.Nft) : Bool { token.owner == to }))) + 1 > 2 ) {
+      return #Err(#ExceedLimit);
+    };
+
     let nft : Types.Nft = {
       owner = to;
       id = newId;
