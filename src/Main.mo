@@ -193,7 +193,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
     };
 
     if ( token_id < nftsEpic_Limit + nftsRare_Limit + nfts_Limit ) {	    
-	    let item = List.find(nftsEpic, func(token: Types.Nft) : Bool { token.id == token_id - nfts_Limit});
+	    let item = List.find(nftsEpic, func(token: Types.Nft) : Bool { token.id == token_id - ( nftsRare_Limit + nfts_Limit ) });
 
 	    switch (item) {
 	      case null {
@@ -228,7 +228,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
     };
 
     if ( token_id < nftsUnique_Limit + nftsEpic_Limit + nftsRare_Limit + nfts_Limit ) {
-	    let item = List.find(nftsUnique, func(token: Types.Nft) : Bool { token.id == token_id - nfts_Limit});
+	    let item = List.find(nftsUnique, func(token: Types.Nft) : Bool { token.id == token_id - ( nftsEpic_Limit + nftsRare_Limit + nfts_Limit ) });
 
 	    switch (item) {
 	      case null {
@@ -263,7 +263,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
     };
 
     if ( token_id < nftsLegendary_Limit + nftsUnique_Limit + nftsEpic_Limit + nftsRare_Limit + nfts_Limit ) {
-	    let item = List.find(nftsLegendary, func(token: Types.Nft) : Bool { token.id == token_id - nfts_Limit});
+	    let item = List.find(nftsLegendary, func(token: Types.Nft) : Bool { token.id == token_id - ( nftsUnique_Limit + nftsEpic_Limit + nftsRare_Limit + nfts_Limit ) });
 
 	    switch (item) {
 	      case null {
